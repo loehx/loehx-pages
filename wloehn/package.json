@@ -1,0 +1,12 @@
+{
+  "name": "wloehn",
+  "version": "1.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "nuxi dev",
+    "build": "nuxi build",
+    "start": "nuxi preview",
+    "generate": "nuxi generate"
+  }
+}
