@@ -1,6 +1,10 @@
+import { RouteConfig } from "@nuxt/types/config/router";
+import { contentful, PageEntry } from "./data";
+
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: "static",
+  mode: "universal",
 
   server: {
     port: 4000,
@@ -25,7 +29,11 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ["~/../core/plugins/scrollSpy.ts", "~/../core/plugins/visible.ts"],
+  plugins: [
+    "~/helpers/index.ts",
+    "~/../core/plugins/scrollSpy.ts",
+    "~/../core/plugins/visible.ts",
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: [
@@ -54,4 +62,35 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  router: {
+    async extendRoutes(routes: RouteConfig[], resolve: any) {
+      console.log("extend routes ...");
+      const pages = await contentful.getEntriesByType<PageEntry>("page", {
+        include: 1,
+      });
+      console.log("AAA", routes);
+      pages.forEach((page) =>
+        routes.push({
+          name: page.teaserTitle,
+          path: page.slug,
+          component: resolve(__dirname + "/pages/index.vue"),
+        })
+      );
+      console.log("AAA", routes);
+    },
+  },
+
+  generate: {
+    async routes() {
+      return ["/"];
+      const pages = await contentful.getEntriesByType<PageEntry>("page", {
+        include: 1,
+      });
+      console.log("CCCCCCC !!!");
+      return pages.map((page) => ({
+        route: page.slug,
+      }));
+    },
+  },
 };

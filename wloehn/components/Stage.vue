@@ -33,7 +33,13 @@
 </template>
 
 <script>
+import { useContext } from "@nuxtjs/composition-api";
 export default {
   name: "Stage",
+  setup() {
+    const context = useContext();
+    console.log("context", context.contentful);
+    return {};
+  },
 };
 </script>

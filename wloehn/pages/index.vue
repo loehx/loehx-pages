@@ -1,11 +1,41 @@
 <template>
-  <Stage />
+  <div>
+    <section v-for="content in page.contents" :key="content.id">
+      <Stage v-if="content.type === 'stage'" v-bind="page" />
+    </section>
+  </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { ConfigEntry, contentful, PageEntry } from "../data";
+import { generateMeta } from "../../core";
 
-export default Vue.extend({
-  name: "IndexPage",
-});
+export default {
+  head() {
+    // @ts-ignore
+    const page = this.page as PageEntry;
+    // @ts-ignore
+    const config = this.config as ConfigEntry;
+
+    return generateMeta({
+      title: page.title,
+      description: page.description,
+      faviconSrc: config.favicon?.url,
+      author: config.author,
+      openGraph: {
+        title: page.ogtitle,
+        description: page.ogdescription,
+        image: page.image,
+      },
+    });
+  },
+  async asyncData({ route }: { route: any }) {
+    const conf = require("../config.json");
+    const [page, config] = await Promise.all([
+      contentful.getEntryBySlug<PageEntry>(route.path),
+      contentful.getEntry<ConfigEntry>(conf.contentful.configEntryId),
+    ]);
+    return { page, config };
+  },
+};
 </script>

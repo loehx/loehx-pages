@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "wloehn-dev": "yarn workspace wloehn run dev",
+    "wloehn-generate": "yarn workspace wloehn run generate",
     "build": "yarn workspaces foreach -tvp run build",
     "test": "yarn workspaces foreach -tv run test",
     "start": "node app/.dist/index.js"
@@ -20,7 +21,8 @@
     "nuxt-edge": "latest",
     "vue": "^2.6.14",
     "vue-server-renderer": "^2.6.14",
-    "vue-template-compiler": "^2.6.14"
+    "vue-template-compiler": "^2.6.14",
+    "contentful": "^9.1.6"
   },
   "devDependencies": {
     "@markusantonwolf/tailwind-css-plugin-custom-color-palette": "^1.4.0",
