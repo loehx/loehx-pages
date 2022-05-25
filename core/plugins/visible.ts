@@ -1,31 +1,19 @@
-import Vue from "vue";
+import Vue, { DirectiveOptions } from "vue";
 import { useVisibility } from "~/../core/composables";
-import { ref, watch, Ref } from "@vue/composition-api";
+import { ref, watch } from "@vue/composition-api";
 
 const detachMap = new WeakMap();
 
 Vue.directive("visible", {
-  inserted(el: HTMLElement) {
-    const {
-      attach,
-      detach,
-      top,
-      screenHeight,
-      bottom,
-      center,
-      isVisible,
-      relativeTop,
-      relativeBottom,
-      visibility,
-    } = useVisibility(ref(el));
+  inserted(el: HTMLElement, binding) {
+    const { attach, detach, isVisible } = useVisibility(ref(el), 0.1);
 
     detachMap.set(el, detach);
-    const num = (n: Ref<number | undefined>) => n.value?.toFixed(3) || null;
-    watch(visibility, () => {
-      el.style.setProperty("--ss-visible", `${isVisible.value ? 1 : 0}`);
-      el.style.setProperty("--ss-visibility", num(visibility));
-      el.style.setProperty("--ss-top", num(relativeTop));
-      el.style.setProperty("--ss-bottom", num(relativeBottom));
+
+    watch(isVisible, () => {
+      setTimeout(() => {
+        el.classList.toggle("visible", isVisible.value);
+      }, binding.value?.delay || 0);
     });
 
     attach();

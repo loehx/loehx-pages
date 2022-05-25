@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "license": "UNLICENSED",
+  "type": "commonjs",
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate"
-  }
+    "build": "tsc"
+  },
+  "dependencies": {
+    "marked": "^4.0.16",
+    "vue-lazy-hydration": "^2.0.0-beta.4"
+  },
+  "main": "index.js",
+  "author": "Alexander Löhn"
 }

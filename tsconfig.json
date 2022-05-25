@@ -18,6 +18,7 @@
     "resolveJsonModule": true,
     "types": ["@nuxt/types", "@types/node"]
   },
+  "include": ["packages"],
   "exclude": [".nuxt", "dist"],
   "declaration": true
 }

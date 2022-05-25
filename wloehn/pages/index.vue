@@ -1,16 +1,23 @@
 <template>
   <div>
-    <section v-for="content in page.contents" :key="content.id">
-      <Stage v-if="content.type === 'stage'" v-bind="page" />
-    </section>
+    <ContentModule
+      v-for="content in page.contents"
+      :key="content.id"
+      :data="content"
+      :config="config"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { ConfigEntry, contentful, PageEntry } from "../data";
 import { generateMeta } from "../../core";
+import ContentModule from "../components/ContentModule.vue";
 
 export default {
+  components: {
+    ContentModule,
+  },
   head() {
     // @ts-ignore
     const page = this.page as PageEntry;

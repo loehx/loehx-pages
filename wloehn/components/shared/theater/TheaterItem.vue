@@ -1,6 +1,5 @@
 <template>
   <div
-    v-scroll-spy
     class="theater-item absolute h-fit w-fit"
     :style="{
       '--duration': duration,
@@ -36,19 +35,13 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .theater-item {
   width: calc(var(--width, 10) * 1rem);
   z-index: var(--depth, 0);
   top: calc(var(--top) * 1%);
-  left: calc(
-    calc(var(--left) * var(--ss-visible)) +
-      calc(calc(1 - var(--ss-visible)) * 100%)
-  );
-  right: calc(
-    calc(var(--right) * var(--ss-visible)) +
-      calc(calc(1 - var(--ss-visible)) * 100%)
-  );
+  left: 100%;
+  right: 100%;
   --shadow-y: calc(var(--depth, 0) * 10px);
   --shadow-x: calc(var(--shadow-y) / 2 * -1);
   /*--shadow-x: calc(calc(100 - var(--right, 0)) + var(--left, 0)) / 100 *
@@ -57,7 +50,13 @@ export default {
   transition: left calc(var(--duration, 3) * 1s) ease-out
       calc(var(--delay, 0) * 1s),
     right calc(var(--duration, 3) * 1s) ease-out calc(var(--delay, 0) * 1s);
-  opacity: var(--ss-visible, 0);
+  opacity: 0;
+
+  .visible & {
+    left: var(--left);
+    right: var(--right);
+    opacity: 1;
+  }
 }
 
 /* @keyframes slide {

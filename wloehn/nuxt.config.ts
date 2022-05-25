@@ -31,6 +31,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     "~/helpers/index.ts",
+    "~/../core/plugins/components.ts",
     "~/../core/plugins/scrollSpy.ts",
     "~/../core/plugins/visible.ts",
   ],
@@ -69,7 +70,6 @@ export default {
       const pages = await contentful.getEntriesByType<PageEntry>("page", {
         include: 1,
       });
-      console.log("AAA", routes);
       pages.forEach((page) =>
         routes.push({
           name: page.teaserTitle,
@@ -77,20 +77,18 @@ export default {
           component: resolve(__dirname + "/pages/index.vue"),
         })
       );
-      console.log("AAA", routes);
     },
   },
 
-  generate: {
-    async routes() {
-      return ["/"];
-      const pages = await contentful.getEntriesByType<PageEntry>("page", {
-        include: 1,
-      });
-      console.log("CCCCCCC !!!");
-      return pages.map((page) => ({
-        route: page.slug,
-      }));
-    },
-  },
+  // FIXME: this does simply not work...
+  // generate: {
+  //   async routes() {
+  //     const pages = await contentful.getEntriesByType<PageEntry>("page", {
+  //       include: 1,
+  //     });
+  //     return pages.map((page) => ({
+  //       route: page.slug,
+  //     }));
+  //   },
+  // },
 };

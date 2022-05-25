@@ -1,6 +1,5 @@
-<!-- Please remove this file from your project -->
 <template>
-  <div>
+  <div v-visible="{ delay: 100 }">
     <div class="h-screen w-full relative">
       <Background dotted dotSize="15px" class="bg-primary-400" />
       <Theater>
@@ -38,7 +37,7 @@ export default {
   name: "Stage",
   setup() {
     const context = useContext();
-    console.log("context", context.contentful);
+    //console.log("context", context.contentful);
     return {};
   },
 };
