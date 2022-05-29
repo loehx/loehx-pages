@@ -1,6 +1,6 @@
 <template>
   <div class="h-[50vh] w-full relative" v-visible="{}">
-    <Background dotted dotSize="15px" class="bg-secondary-400" />
+    <DottedBackground dotSize="15px" class="bg-secondary-400" />
     <Theater>
       <TheaterItem
         v-for="n in 4"

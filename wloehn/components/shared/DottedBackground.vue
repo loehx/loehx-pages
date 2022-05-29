@@ -1,16 +1,14 @@
 <template>
   <div
-    class="absolute inset-0"
-    :class="{ dotted }"
+    class="dotted absolute inset-0"
     :style="{ '--dots-width': dotSize }"
   ></div>
 </template>
 
 <script lang="ts">
 export default {
-  name: "Background",
+  name: "DottedBackground",
   props: {
-    dotted: Boolean,
     dotSize: {
       type: String,
       default: () => "10px",

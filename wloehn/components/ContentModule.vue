@@ -1,14 +1,10 @@
 <template>
   <section>
-    <LazyHydrate when-idle>
-      <component :is="'m-' + data.type" :data="data" />
-    </LazyHydrate>
+    <component :is="'m-' + data.type" :data="data" />
   </section>
 </template>
 
 <script>
-import { useContext } from "@nuxtjs/composition-api";
-
 const MODULES = [
   { type: "stage", render: () => import("./content-modules/Stage.vue") },
   { type: "text", render: () => import("./content-modules/TextModule.vue") },

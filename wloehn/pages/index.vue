@@ -5,6 +5,7 @@
       :key="content.id"
       :data="content"
       :config="config"
+      :page="page"
     />
   </div>
 </template>
@@ -12,12 +13,8 @@
 <script lang="ts">
 import { ConfigEntry, contentful, PageEntry } from "../data";
 import { generateMeta } from "../../core";
-import ContentModule from "../components/ContentModule.vue";
 
 export default {
-  components: {
-    ContentModule,
-  },
   head() {
     // @ts-ignore
     const page = this.page as PageEntry;
@@ -43,6 +40,14 @@ export default {
       contentful.getEntry<ConfigEntry>(conf.contentful.configEntryId),
     ]);
     return { page, config };
+  },
+  provide() {
+    return {
+      // @ts-ignore
+      page: this.page,
+      // @ts-ignore
+      config: this.config,
+    };
   },
 };
 </script>

@@ -50,6 +50,8 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    // https://image.nuxtjs.org/getting-started
+    "@nuxt/image",
     // https://go.nuxtjs.dev/typescript
     "@nuxt/typescript-build",
     // https://go.nuxtjs.dev/tailwindcss
@@ -91,4 +93,10 @@ export default {
   //     }));
   //   },
   // },
+
+  image: {
+    contentful: {},
+  },
+
+  devServerHandlers: [],
 };

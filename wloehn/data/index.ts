@@ -6,7 +6,7 @@ import {
 } from "../../core/data";
 import config from "../config.json";
 
-export { GetEntryOptions, Entry };
+export { GetEntryOptions, Entry, AssetEntry };
 
 export interface PageEntry extends Entry {
   name: string;
@@ -23,6 +23,8 @@ export interface ConfigEntry extends Entry {
   name: string;
   author: string;
   favicon: AssetEntry;
+  frames: AssetEntry[];
+  assets: AssetEntry[];
 }
 
 export const contentful = cf(config.contentful) as {

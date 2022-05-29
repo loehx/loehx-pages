@@ -1,6 +1,10 @@
 <template>
   <div
     class="theater-item absolute h-fit w-fit"
+    :class="{
+      'theater-item__default': !center,
+      'theater-item__center': center,
+    }"
     :style="{
       '--duration': duration,
       '--top': top,
@@ -11,11 +15,12 @@
       '--right': typeof right !== 'undefined' ? right + '%' : undefined,
     }"
   >
-    <component :is="tag" />
     <div
-      class="absolute left-1/2 bottom-1/2 -translate-x-1/2 bg-white"
+      class="absolute left-1/2 bottom-1/2 -translate-x-1/2 bg-white opacity-50"
       :style="{ width: '3px', height: '100vh' }"
     ></div>
+    <component :is="tag" class="relative" />
+    <slot></slot>
   </div>
 </template>
 
@@ -28,34 +33,50 @@ export default {
     top: Number,
     delay: Number,
     depth: Number,
-    width: Number,
+    width: String,
     left: Number,
     right: Number,
+    center: Boolean,
   },
 };
 </script>
 
 <style scoped lang="scss">
 .theater-item {
-  width: calc(var(--width, 10) * 1rem);
+  width: var(--width);
   z-index: var(--depth, 0);
-  top: calc(var(--top) * 1%);
-  left: 100%;
-  right: 100%;
   --shadow-y: calc(var(--depth, 0) * 10px);
   --shadow-x: calc(var(--shadow-y) / 2 * -1);
   /*--shadow-x: calc(calc(100 - var(--right, 0)) + var(--left, 0)) / 100 *
     var(--shadow-y);*/
-  filter: drop-shadow(var(--shadow-x) var(--shadow-y) 1px rgba(0, 0, 0, 10%));
-  transition: left calc(var(--duration, 3) * 1s) ease-out
-      calc(var(--delay, 0) * 1s),
-    right calc(var(--duration, 3) * 1s) ease-out calc(var(--delay, 0) * 1s);
-  opacity: 0;
+  filter: drop-shadow(var(--shadow-x) var(--shadow-y) 1px rgba(0, 0, 0, 20%));
 
-  .visible & {
-    left: var(--left);
-    right: var(--right);
-    opacity: 1;
+  &__center {
+    left: 50%;
+    transform: translate(-50%, -200%);
+    top: -50%;
+
+    .visible & {
+      animation: default-entrance calc(var(--duration, 3) * 1s) ease;
+      transform: rotate(0deg) translate(-50%, 0);
+      top: calc(var(--top) * 1%);
+    }
+  }
+
+  &__default {
+    top: calc(var(--top) * 1%);
+    left: 100%;
+    right: 100%;
+    transition: left calc(var(--duration, 3) * 1s) ease-out
+        calc(var(--delay, 0) * 1s),
+      right calc(var(--duration, 3) * 1s) ease-out calc(var(--delay, 0) * 1s);
+    opacity: 0;
+
+    .visible & {
+      left: var(--left);
+      right: var(--right);
+      opacity: 1;
+    }
   }
 }
 
@@ -78,4 +99,31 @@ export default {
     );
   }
 } */
+
+@keyframes default-entrance {
+  0% {
+    top: -50%;
+    transform: rotate(-2deg) translate(-50%, 0);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+  20%,
+  60% {
+    transform: rotate(3deg) translate(-53%, 0);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+  40% {
+    transform: rotate(-3deg) translate(-47%, 0);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+  80% {
+    transform: rotate(-3deg) translate(-47%, 0);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+  100% {
+  }
+}
 </style>

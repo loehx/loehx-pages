@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@markusantonwolf/tailwind-css-plugin-custom-color-palette": "^1.4.0",
+    "@nuxt/image": "^0.6.2",
     "@nuxt/types": "latest",
     "@nuxt/typescript-build": "latest",
     "@nuxt/ui-templates": "npm:@nuxt/ui-templates-edge@latest",
